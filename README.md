@@ -94,3 +94,20 @@ cd operations-dashboard
 # Open Dashboard in your browser:
 # http://192.168.50.53:8800
 ```
+
+---
+
+## 🌐 Omarchy Migration & GitOps Ecosystem Map
+
+All repositories in this project are interconnected and indexed under the GitHub topic [`omarchy-gitops-ecosystem`](https://github.com/topics/omarchy-gitops-ecosystem):
+
+| Repository | Role in Ecosystem | Service Route / Port | Primary Topic Tags |
+| :--- | :--- | :---: | :--- |
+| 🎛️ [**`ado-to-gh-migration`**](https://github.com/FreeFades2Black/ado-to-gh-migration) | **Master Migration Suite & Operations Gateway** | `:8800` (Gateway) | `migration-toolkit`, `dual-run-canary` |
+| ⚡ [**`omarchy-gitops-forge`**](https://github.com/FreeFades2Black/omarchy-gitops-forge) | **1,000-Commit Forge & CI Matrix Testbed** | CI Matrix Engine | `1000-commits`, `ci-cd-matrix` |
+| 🔐 [**`omarchy-auth-service`**](https://github.com/FreeFades2Black/omarchy-auth-service) | **OAuth2 & JWT Zero-Trust Identity Service** | `:8810` / Gateway | `oauth2`, `zero-trust` |
+| 💳 [**`omarchy-payment-vault`**](https://github.com/FreeFades2Black/omarchy-payment-vault) | **Encrypted Transaction Settlement Gateway** | `:8820` / Gateway | `payments`, `encryption` |
+| 📈 [**`omarchy-analytics-engine`**](https://github.com/FreeFades2Black/omarchy-analytics-engine) | **Real-Time Streaming Telemetry & Metrics** | `:8830` / Gateway | `telemetry`, `analytics` |
+| 📦 [**`omarchy-order-fulfillment`**](https://github.com/FreeFades2Black/omarchy-order-fulfillment) | **Distributed Logistics & Order Dispatch Engine** | `:8840` / Gateway | `logistics`, `order-routing` |
+
+---
