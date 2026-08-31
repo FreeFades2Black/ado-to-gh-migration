@@ -254,3 +254,27 @@ All repositories in this project are interconnected and indexed under the GitHub
 | 📦 [**`omarchy-order-fulfillment`**](https://github.com/FreeFades2Black/omarchy-order-fulfillment) | **Distributed Logistics & Order Dispatch Engine** | `:8840` / Gateway | `logistics`, `order-routing` |
 
 ---
+
+---
+
+## 🔍 Internal Code Architecture & Comprehensive Inline Documentation
+
+> **Comprehensive Codebase Documentation Audit Completed (2026)**
+> Every core module, function, class, and critical execution path across this repository has been audited and enriched with detailed internal inline comments (`# ...`) and comprehensive docstrings. Anyone reading the source code can immediately trace the operational mechanics, data flow, failure recovery strategies, and architectural decisions.
+
+### 🧩 Key Codebase Modules & Internal Mechanics Walkthrough
+
+| File / Component | Purpose & Internal Mechanics |
+| :--- | :--- |
+| [`operations-dashboard/operations_gateway.py`](operations-dashboard/operations_gateway.py) | FastAPI reverse proxy gateway mirroring 50/50 live traffic between legacy ADO and target GitHub clusters. |
+| [`operations-dashboard/shared_db.py`](operations-dashboard/shared_db.py) | SQLite persistent datastore maintaining transaction logs, latency metrics, and parity audit discrepancies. |
+| [`operations-dashboard/service_source_ado.py`](operations-dashboard/service_source_ado.py) | Legacy Azure DevOps service node simulating enterprise SQLite processing and legacy pipeline execution. |
+| [`operations-dashboard/service_target_github.py`](operations-dashboard/service_target_github.py) | Migrated GitHub Enterprise service node simulating containerized GitHub Actions execution. |
+| [`scripts/02_triage_audit.py`](scripts/02_triage_audit.py) | Automated pre-migration repo auditor scanning branch protections, PR policies, and secret leakage. |
+| [`scripts/03_sanitize_and_scrub.py`](scripts/03_sanitize_and_scrub.py) | Secret scrubber removing hardcoded tokens, internal domains, and legacy credentials prior to migration. |
+| [`scripts/05_compliance_audit.py`](scripts/05_compliance_audit.py) | Post-migration compliance scanner validating SOC2/FedRAMP controls and OIDC zero-trust enforcement. |
+
+### 💡 Developer & Maintainer Guidelines
+- **Inline Documentation Standard:** Every non-trivial logic branch, data transformation, API integration, and error block includes descriptive line-by-line internal notes.
+- **Traceability:** Function signatures declare explicit type annotations (`typing.Dict`, `typing.List`, `typing.Optional`) and descriptive parameter/return docstrings.
+- **Error Resilience:** Try/except blocks document exact failure modes, fallback pathways, and logging formats.
