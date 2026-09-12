@@ -1,0 +1,70 @@
+{
+  "title": "ADO to GitHub Enterprise Migration Golden Signals",
+  "schemaVersion": 38,
+  "panels": [
+    {
+      "title": "Repositories Migrated (Target: 100%)",
+      "type": "gauge",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "sum(ado_repos_migrated_success) / sum(ado_repos_total) * 100",
+          "legendFormat": "% Completed"
+        }
+      ]
+    },
+    {
+      "title": "Git Commit Integrity Preservation Rate (%)",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "avg(migration_git_sha_parity_ratio) * 100",
+          "legendFormat": "% SHA Parity"
+        }
+      ]
+    },
+    {
+      "title": "GitHub API Rate-Limit Consumption",
+      "type": "timeseries",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "5000 - github_rate_limit_remaining",
+          "legendFormat": "Consumed Calls"
+        }
+      ]
+    },
+    {
+      "title": "Branch Policy to Ruleset Translation Success",
+      "type": "stat",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "sum(ruleset_translation_success_total)",
+          "legendFormat": "Active Rulesets"
+        }
+      ]
+    }
+  ]
+}

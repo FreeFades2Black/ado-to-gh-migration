@@ -1,0 +1,22 @@
+groups:
+  - name: migration_pipeline_alerts
+    rules:
+      - alert: GitHubRateLimitCritical
+        expr: github_rate_limit_remaining < 500
+        for: 1m
+        labels:
+          severity: critical
+          tier: devops-migration
+        annotations:
+          summary: "GitHub API rate limit remaining < 500 calls"
+          description: "Migration batch throttling imminent. Automatic backoff engaged."
+
+      - alert: MigrationCommitHashMismatch
+        expr: migration_sha_mismatch_total > 0
+        for: 0m
+        labels:
+          severity: critical
+          tier: data-integrity
+        annotations:
+          summary: "Git SHA mismatch detected during migration validation"
+          description: "Source ADO repository and destination GitHub repository commit trees differ."
