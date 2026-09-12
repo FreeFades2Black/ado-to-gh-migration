@@ -1,0 +1,61 @@
+# ==============================================================================
+# Phase 3: Zero-Static-Secret Cloud Authentication Template (OIDC Federated Auth)
+# Replaces legacy AWS Access Keys & Azure Service Principals with Short-Lived JWTs
+# ==============================================================================
+name: Zero-Trust Cloud Deployment Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Required permissions for GitHub OIDC Token exchange
+permissions:
+  id-token: write   # Mandatory for requesting the OIDC JWT token
+  contents: read    # Required for git checkout
+
+jobs:
+  # ----------------------------------------------------------------------------
+  # Option A: AWS OIDC Workload Identity Federation
+  # ----------------------------------------------------------------------------
+  deploy-aws:
+    name: Authenticate & Deploy to AWS via OIDC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials (Zero Static Keys)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::123456789012:role/GitHubActionsEnterpriseDeployer
+          aws-region: us-east-1
+          audience: sts.amazonaws.com
+
+      - name: Verify AWS Identity
+        run: |
+          aws sts get-caller-identity
+          echo "[+] Successfully assumed AWS IAM role using short-lived OIDC token!"
+
+  # ----------------------------------------------------------------------------
+  # Option B: Azure OIDC Federated Credential Login
+  # ----------------------------------------------------------------------------
+  deploy-azure:
+    name: Authenticate & Deploy to Azure via OIDC
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Azure Login via OIDC (No Client Secrets)
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Verify Azure Context
+        run: |
+          az account show
+          echo "[+] Successfully authenticated to Azure Subscription via Federated OIDC!"
