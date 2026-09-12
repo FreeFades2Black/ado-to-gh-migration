@@ -112,7 +112,7 @@ while ($attempt -lt $MaxRetries -and -not $success) {
             Update-RepoState -RepoName $AdoRepo -Status "COMPLETED" -ErrorMessage "" -Attempts $attempt -TargetGhRepo $targetGhRepo
         } else {
             $lastError = "gh gei exited with code $LASTEXITCODE"
-            Write-Log "GEI migration failed on attempt $attempt: $lastError" "WARN" -RepoName $AdoRepo
+            Write-Log "GEI migration failed on attempt ${attempt}: $lastError" "WARN" -RepoName $AdoRepo
         }
     } catch {
         $lastError = $_.Exception.Message

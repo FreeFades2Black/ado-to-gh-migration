@@ -79,7 +79,7 @@ foreach ($item in $reposToVerify) {
     $report += $row
     
     if ($status -eq "VERIFIED_MATCH") {
-        Write-Log "  [+] $name: Commit count ($adoCommits) matches perfectly." "SUCCESS"
+        Write-Log "  [+] ${name}: Commit count ($adoCommits) matches perfectly." "SUCCESS"
     }
 }
 

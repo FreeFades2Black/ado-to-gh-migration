@@ -4,9 +4,16 @@
 
 # Script Root & Default Paths
 $script:RootPath = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
+if (-not $script:RootPath) {
+    $script:RootPath = (Get-Location).Path
+}
 $script:ConfigDir = Join-Path $script:RootPath "config"
 $script:LogDir = Join-Path $script:RootPath "logs"
 $script:StateFile = Join-Path $script:ConfigDir "migration-state.json"
+$global:RootPath = $script:RootPath
+$global:ConfigDir = $script:ConfigDir
+$global:LogDir = $script:LogDir
+$global:StateFile = $script:StateFile
 
 # Ensure runtime directories exist
 if (-not (Test-Path $script:ConfigDir)) { New-Item -ItemType Directory -Path $script:ConfigDir -Force | Out-Null }
@@ -169,4 +176,6 @@ function Test-Prerequisites {
     return $allPassed
 }
 
-Export-ModuleMember -Function Write-Log, Load-EnvFile, Get-MigrationState, Save-MigrationState, Update-RepoState, Test-Prerequisites -Variable RootPath, ConfigDir, LogDir, StateFile -ErrorAction SilentlyContinue
+if ($ExecutionContext.SessionState.Module) {
+    Export-ModuleMember -Function Write-Log, Load-EnvFile, Get-MigrationState, Save-MigrationState, Update-RepoState, Test-Prerequisites -Variable RootPath, ConfigDir, LogDir, StateFile -ErrorAction SilentlyContinue
+}

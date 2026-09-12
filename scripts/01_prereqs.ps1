@@ -15,21 +15,25 @@ $passed = Test-Prerequisites -RequireGEI $false
 
 # Attempt auto-install of gh-gei if gh is present
 if (Get-Command gh -ErrorAction SilentlyContinue) {
-    $exts = gh extension list
+    $exts = gh extension list 2>$null
     if ($exts -notmatch "gei") {
         Write-Log "Installing GitHub Enterprise Importer (GEI) extension..." "INFO"
-        gh extension install github/gh-gei
+        gh extension install github/gh-gei 2>$null
         if ($LASTEXITCODE -eq 0) {
-            Write-Log "gh-gei successfully installed!" "SUCCESS"
+            Write-Log "gh-gei successfully installed." "SUCCESS"
             $passed = $true
         } else {
-            Write-Log "Failed to install gh-gei automatically." "ERROR"
-            $passed = $false
+            $mode = [System.Environment]::GetEnvironmentVariable("MIGRATION_MODE")
+            if ($mode -eq "mock") {
+                Write-Log "gh-gei extension not installed (skipped for mock sandbox mode)." "WARN"
+                $passed = $true
+            } else {
+                Write-Log "gh-gei extension is missing. Install with 'gh extension install github/gh-gei'." "WARN"
+                $passed = $false
+            }
         }
     } else {
-        Write-Log "Checking for gh-gei updates..." "INFO"
-        gh extension upgrade gei
-        Write-Log "gh-gei extension is up to date." "SUCCESS"
+        Write-Log "gh-gei extension is installed." "SUCCESS"
         $passed = $true
     }
 }

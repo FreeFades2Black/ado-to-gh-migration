@@ -5,13 +5,16 @@
 param(
     [string]$AdoOrg,
     [string]$AdoProject,
-    [string]$AdoPat,
-    [string]$OutputFile = (Join-Path $script:ConfigDir "repos.csv"),
+    [string]$OutputFile,
     [switch]$Mock
 )
 
 $commonPath = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "00_common.ps1"
 . $commonPath
+
+if (-not $OutputFile) {
+    $OutputFile = Join-Path $script:ConfigDir "repos.csv"
+}
 
 Load-EnvFile
 

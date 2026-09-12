@@ -3,7 +3,7 @@
 # ==============================================================================
 [CmdletBinding()]
 param(
-    [string]$ManifestFile = (Join-Path $script:ConfigDir "repos.csv"),
+    [string]$ManifestFile,
     [switch]$ResumeOnly,
     [switch]$ForceAll,
     [switch]$DryRun,
@@ -12,6 +12,10 @@ param(
 
 $commonPath = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "00_common.ps1"
 . $commonPath
+
+if (-not $ManifestFile) {
+    $ManifestFile = Join-Path $script:ConfigDir "repos.csv"
+}
 
 Load-EnvFile
 
